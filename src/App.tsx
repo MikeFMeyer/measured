@@ -1,32 +1,56 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import Toggle from './components/Toggle'
+import NumberInput from './components/NumberInput'
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [verticalChecked, setVerticalChecked] = useState(false)
+  const [horizontalChecked, setHorizontalChecked] = useState(false)
+  const [horizontalValue, setHorizontalValue] = useState()
+  const [verticalValue, setVerticalValue] = useState()
+  const [objectsAmount, setObjectsAmount] = useState()
+  const [objectsSame, setObjectsSame] = useState(false)
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div className="p-10">
+        <h1 className="text-3xl font-bold text-center">
+          Measured
+        </h1>
+
+        <div>
+          <div className='mt-10'>
+            <Toggle title="Vertical Calc" description="Perform a vertical calculation" isOn={verticalChecked} handleToggle={() => setVerticalChecked(!verticalChecked)}/>
+          </div>
+          {verticalChecked && <div className='mt-10'>
+            <NumberInput label="Vertical Measurement" placeholder="e.g. 12" handleInput={(e) => setVerticalValue(e.target.value)}/>
+          </div>}
+        </div>
+
+        <div className='mt-10'>
+          <div className='mt-10'>
+            <Toggle title="Horizontal Calc" description="Perform a horizontal calculation" isOn={horizontalChecked} handleToggle={() => setHorizontalChecked(!horizontalChecked)}/>
+          </div>
+          {horizontalChecked && <div className='mt-10'>
+            <NumberInput label="Horizontal Measurement" placeholder="e.g. 12" handleInput={(e) => setHorizontalValue(e.target.value)}/>
+          </div>}
+        </div>
+      
+        <div className='mt-10'>
+          <NumberInput label="Number of objects" placeholder="e.g. 2" helpText="How many objects should be taken into consideration when doing the calculations" handleInput={(e) => setObjectsAmount(e.target.value)}/>
+        </div>
+
+        <div className='mt-10'>
+          <div className='mt-10'>
+            <Toggle title="Objects same size" description="Are all of the objects mentioned above the same size?" isOn={objectsSame} handleToggle={() => setObjectsSame(!objectsSame)}/>
+          </div>
+        </div>
+
+        {objectsAmount && objectsSame &&
+          <div>one</div>
+        }
+        {objectsAmount && !objectsSame &&
+          <div>more</div>
+        }
     </div>
   )
 }
